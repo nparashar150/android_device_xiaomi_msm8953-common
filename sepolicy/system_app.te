@@ -19,11 +19,3 @@ allow system_app sysfs_micgain:dir search;
 allow system_app sysfs_micgain:file rw_file_perms;
 allow system_app sysfs_torch:dir search;
 allow system_app sysfs_torch:file rw_file_perms;
-<<<<<<< HEAD
-allow system_app sysfs_leds:file rw_file_perms;
-allow system_app sysfs_leds:dir rw_file_perms;
-=======
-allow system_app sysfs_leds:dir search;
->>>>>>> 69945295c23d7d940b4f2969bb8dee99bcd08d8c
-
-
