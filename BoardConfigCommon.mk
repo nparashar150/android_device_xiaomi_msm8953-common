@@ -47,8 +47,7 @@ BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01000000 --tags_offset 0x00000100
 TARGET_KERNEL_SOURCE := kernel/xiaomi/msm8953
 TARGET_KERNEL_CLANG_COMPILE := true
 TARGET_KERNEL_VERSION := 4.9
-
-
+TARGET_KERNEL_CLANG_VERSION := r370808
 # ANT
 BOARD_ANT_WIRELESS_DEVICE := "vfs-prerelease"
 
@@ -182,6 +181,9 @@ TARGET_PER_MGR_ENABLED := true
 # Power
 #TARGET_USES_INTERACTION_BOOST := true
 
+# SurfaceFlinger
+TARGET_USE_AOSP_SURFACEFLINGER := true
+
 # Qualcomm
 BOARD_USES_QCOM_HARDWARE := true
 
@@ -203,6 +205,8 @@ endif
 # SELinux
 include device/qcom/sepolicy-legacy-um/sepolicy.mk
 BOARD_SEPOLICY_DIRS += $(VENDOR_PATH)/sepolicy
+SELINUX_IGNORE_NEVERALLOWS := true
+
 
 # Wi-Fi
 BOARD_HAS_QCOM_WLAN := true

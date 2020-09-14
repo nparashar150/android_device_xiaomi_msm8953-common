@@ -180,6 +180,11 @@
     <!-- Is the notification LED intrusive? Used to decide if there should be a disable option -->
     <bool name="config_intrusiveNotificationLed">true</bool>
 
+    <!-- Enables or disables haptic effect when the text insertion/selection handle is moved
+         manually by the user. Off by default, since the expected haptic feedback may not be
+         available on some devices. -->
+    <bool name="config_enableHapticTextHandle">true</bool>
+
     <!-- When true use the linux /dev/input/event subsystem to detect the switch changes
          on the headphone/microphone jack. When false use the older uevent framework. -->
     <bool name="config_useDevInputEventForAudioJack">true</bool>
@@ -378,11 +383,6 @@
     <!-- Flag specifying whether WFC over IMS is available on device -->
     <bool name="config_device_wfc_ims_available">true</bool>
 
-    <!-- Flag specifying whether WFC over IMS should be available 
-    for carrier: independent of carrier provisioning. If false: hard disabled. If true: then depends on carrier provisioning, 
-    availability etc -->
-    <bool name="config_carrier_wfc_ims_available">true</bool>
-
     <!-- Whether device supports double tap to wake -->
     <bool name="config_supportDoubleTapWake">true</bool>
 
@@ -481,26 +481,7 @@
     <!-- Default value for proximity check on screen wake
      NOTE ! - Enable for devices that have a fast response proximity sensor (ideally < 300ms)-->
     <bool name="config_proximityCheckOnWake">true</bool>
+    <integer name="config_proximityCheckTimeout">100</integer>
     <bool name="config_proximityCheckOnWakeEnabledByDefault">true</bool>
 
-    <!-- Configuration to enable non-default PDP during IWLAN -->
-    <bool name="config_feature_iwlan_enabled">true</bool>
-
-    <!-- IWLAN data service package name to bind to by default. If none is specified in an overlay, an
-         empty string is passed in -->
-    <string name="config_wlan_data_service_package">vendor.qti.iwlan</string>
-
-    <!-- IWLAN network service package name to bind to by default. If none is specified in an overlay, an
-         empty string is passed in -->
-    <string name="config_wlan_network_service_package">vendor.qti.iwlan</string>
-
-    <!-- Telephony qualified networks service package name to bind to by default. -->
-    <string name="config_qualified_networks_service_package">vendor.qti.iwlan</string>
-
-    <!-- The component name, flattened to a string, for the default autofill service
-         to  enabled for an user. This service must be trusted, as it can be activated
-         without explicit consent of the user. If no autofill service with the
-          specified name exists on the device, autofill will be disabled by default.
-    -->
-    <string name="config_defaultAutofillService" translatable="false">com.google.android.gms/.autofill.service.AutofillService</string>
 </resources>

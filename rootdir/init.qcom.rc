@@ -48,13 +48,6 @@ on init
     write /proc/sys/vm/page-cluster 0
 
 on post-fs
-    # Vibrator
-    chown system system /sys/class/leds/vibrator/vmax_mv_user
-    chown system system /sys/class/leds/vibrator/vmax_mv_call
-    chown system system /sys/class/leds/vibrator/vmax_mv_strong
-    chown system system sys/class/leds/vibrator/vmax_override
-    chmod 0660 /sys/class/leds/vibrator/vmax_override
-    write /sys/class/leds/vibrator/vmax_override 1
     chmod 0755 /sys/kernel/debug/tracing
 
 on early-boot
@@ -407,8 +400,8 @@ on post-fs-data
     #Start move time data to /data/vendor once post-fs-data done
     start vendor.move_time_data
 
-on property:hw.fm.init=*
-    write /sys/module/radio_iris_transport/parameters/fmsmd_set ${hw.fm.init}
+on property:vendor.hw.fm.init=*
+    write /sys/module/radio_iris_transport/parameters/fmsmd_set ${vendor.hw.fm.init}
 
 service iop /system/vendor/bin/iop
     class main
@@ -590,7 +583,9 @@ service vendor.ril-daemon2 /vendor/bin/hw/rild -c 2
 
 service charger /system/bin/charger
     class charger
-    group system graphics
+    user system
+    group system graphics input
+    capabilities SYS_BOOT
     seclabel u:r:charger:s0
 
 service vendor.msm_irqbalance /vendor/bin/msm_irqbalance -f /system/vendor/etc/msm_irqbalance.conf
@@ -636,49 +631,3 @@ service vendor.audio-hal-2-0 /vendor/bin/hw/android.hardware.audio@2.0-service
 
 on property:dev.bootcomplete=1
     swapon_all /vendor/etc/fstab.qcom
-
-# KCal
-    chown system system /sys/devices/platform/kcal_ctrl.0/kcal_cont
-    chown system system /sys/devices/platform/kcal_ctrl.0/kcal_enable
-    chown system system /sys/devices/platform/kcal_ctrl.0/kcal_hue
-    chown system system /sys/devices/platform/kcal_ctrl.0/kcal_sat
-    chown system system /sys/devices/platform/kcal_ctrl.0/kcal_val
-    chown system system /sys/devices/platform/kcal_ctrl.0/kcal_min
-    chown system system /sys/devices/platform/kcal_ctrl.0/kcal
-    chmod 660 /sys/devices/platform/kcal_ctrl.0/kcal_cont
-    chmod 660 /sys/devices/platform/kcal_ctrl.0/kcal_enable
-    chmod 660 /sys/devices/platform/kcal_ctrl.0/kcal_hue
-    chmod 660 /sys/devices/platform/kcal_ctrl.0/kcal_sat
-    chmod 660 /sys/devices/platform/kcal_ctrl.0/kcal_val
-    chmod 660 /sys/devices/platform/kcal_ctrl.0/kcal_min
-    chmod 660 /sys/devices/platform/kcal_ctrl.0/kcal
-
- # USB Fastcharge
-    chown system system /sys/kernel/fast_charge/force_fast_charge
-    chmod 0660 /sys/kernel/fast_charge/force_fast_charge
-     # Flashlight
-    chown root system /sys/class/leds/led:torch_0/max_brightness
-    chmod 0660 /sys/class/leds/led:torch_0/max_brightness
-    chown root system /sys/class/leds/led:torch_1/max_brightness
-    chmod 0660 /sys/class/leds/led:torch_1/max_brightness
-    write /sys/class/leds/led:torch_1/max_brightness 0
-
- # Vibration
-    chown system system /sys/class/leds/vibrator/vmax_override
-    chmod 0660 /sys/class/leds/vibrator/vmax_override
-    write /sys/class/leds/vibrator/vmax_override 1
-    chown system system /sys/class/leds/vibrator/vmax_mv_user
-    chmod 0660 /sys/class/leds/vibrator/vmax_mv_user
-    chown system system /sys/class/leds/vibrator/vmax_mv_strong
-    chmod 0660 /sys/class/leds/vibrator/vmax_mv_strong
-    chown system system /sys/class/leds/vibrator/vmax_mv_call
-    chmod 0660 /sys/class/leds/vibrator/vmax_mv_call
-    chown system system /sys/devices/virtual/timed_output/vibrator/vtg_level
-    chmod 0660 /sys/devices/virtual/timed_output/vibrator/vtg_level
-
-    chmod 0660 /sys/kernel/sound_control/earpiece_gain
-    chmod 0660 /sys/kernel/sound_control/speaker_gain
-
- # Backlight dimmer
-    chown system system /sys/module/mdss_fb/parameters/backlight_dimmer
-    chmod 0660 /sys/module/mdss_fb/parameters/backlight_dimmer
