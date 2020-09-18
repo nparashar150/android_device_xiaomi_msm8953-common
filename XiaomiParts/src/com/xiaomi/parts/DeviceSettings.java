@@ -18,11 +18,11 @@ import com.xiaomi.parts.preferences.SecureSettingListPreference;
 import com.xiaomi.parts.preferences.SecureSettingSwitchPreference;
 import com.xiaomi.parts.preferences.VibrationSeekBarPreference;
 import com.xiaomi.parts.preferences.CustomSeekBarPreference;
-
+import com.xiaomi.parts.ambient.AmbientGesturePreferenceActivity;
 import com.xiaomi.parts.su.SuShell;
 import com.xiaomi.parts.su.SuTask;
 import android.util.Log;
-import com.xiaomi.parts.ambient.AmbientGesturePreferenceActivity;
+
 import com.xiaomi.parts.R;
 
 public class DeviceSettings extends PreferenceFragment implements
@@ -31,7 +31,7 @@ public class DeviceSettings extends PreferenceFragment implements
     private static final String TAG = "DeviceSettings";
 
     private static final String PREF_DEVICE_KCAL = "device_kcal";
-	private static final String AMBIENT_DISPLAY = "ambient_display_gestures";
+private static final String AMBIENT_DISPLAY = "ambient_display_gestures";
     // vibration override will use bool instead of integer
     public static final String PREF_VIBRATION_OVERRIDE = "vmax_override";
     public static final String PREF_VIBRATION_PATH = "/sys/class/leds/vibrator/vmax_override";
@@ -90,14 +90,12 @@ public class DeviceSettings extends PreferenceFragment implements
         vib.setEnabled(Vibration.isSupported());
         vib.setChecked(Vibration.isCurrentlyEnabled(this.getContext()));
         vib.setOnPreferenceChangeListener(new Vibration(getContext()));
-        
         Preference ambientDisplay = findPreference(AMBIENT_DISPLAY);
         ambientDisplay.setOnPreferenceClickListener(preference -> {
             Intent intent = new Intent(getContext(), AmbientGesturePreferenceActivity.class);
             startActivity(intent);
             return true;
         });
-
         VibrationSeekBarPreference vibrationSystemStrength = (VibrationSeekBarPreference) findPreference(PREF_VIBRATION_SYSTEM_STRENGTH);
         vibrationSystemStrength.setEnabled(FileUtils.fileWritable(VIBRATION_SYSTEM_PATH));
         vibrationSystemStrength.setOnPreferenceChangeListener(this);
@@ -110,28 +108,9 @@ public class DeviceSettings extends PreferenceFragment implements
         vibrationCallStrength.setEnabled(FileUtils.fileWritable(VIBRATION_CALL_PATH));
         vibrationCallStrength.setOnPreferenceChangeListener(this);
 
-        CustomSeekBarPreference headphone_gain = (CustomSeekBarPreference) findPreference(PREF_HEADPHONE_GAIN);
-        headphone_gain.setEnabled(FileUtils.fileWritable(HEADPHONE_GAIN_PATH));
-        headphone_gain.setOnPreferenceChangeListener(this);
-
-        CustomSeekBarPreference microphone_gain = (CustomSeekBarPreference) findPreference(PREF_MICROPHONE_GAIN);
-        microphone_gain.setEnabled(FileUtils.fileWritable(MICROPHONE_GAIN_PATH));
-        microphone_gain.setOnPreferenceChangeListener(this);
-
         CustomSeekBarPreference torch_yellow = (CustomSeekBarPreference) findPreference(PERF_YELLOW_TORCH_BRIGHTNESS);
         torch_yellow.setEnabled(FileUtils.fileWritable(TORCH_YELLOW_BRIGHTNESS_PATH));
         torch_yellow.setOnPreferenceChangeListener(this);
-
-        mSpeakerGain = (CustomSeekBarPreference) findPreference(PREF_SPEAKER_GAIN);
-        mSpeakerGain.setOnPreferenceChangeListener(this);
-
-        mEarpieceGain = (CustomSeekBarPreference) findPreference(PREF_EARPIECE_GAIN);
-        mEarpieceGain.setOnPreferenceChangeListener(this);
-
-        SecureSettingSwitchPreference dim = (SecureSettingSwitchPreference) findPreference(PREF_BACKLIGHT_DIMMER);
-        dim.setEnabled(Dimmer.isSupported());
-        dim.setChecked(Dimmer.isCurrentlyEnabled(this.getContext()));
-        dim.setOnPreferenceChangeListener(new Dimmer(getContext()));
 
         SwitchPreference fpsInfo = (SwitchPreference) findPreference(PREF_KEY_FPS_INFO);
         fpsInfo.setChecked(prefs.getBoolean(PREF_KEY_FPS_INFO, false));
