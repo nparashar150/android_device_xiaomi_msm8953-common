@@ -16,10 +16,12 @@
 
 $(call inherit-product, vendor/xiaomi/msm8953-common/msm8953-common-vendor.mk)
 
+# Setup dalvik vm configs
+$(call inherit-product, frameworks/native/build/phone-xhdpi-4096-dalvik-heap.mk)
+
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay-lineage
-
 
 # Screen density
 PRODUCT_AAPT_CONFIG := normal
@@ -85,8 +87,7 @@ PRODUCT_PACKAGES += \
     android.hardware.audio@5.0-impl \
     android.hardware.audio@2.0-service \
     android.hardware.audio.effect@5.0-impl \
-    android.hardware.soundtrigger@2.1-impl \
-    audio.a2dp.default \
+    android.hardware.soundtrigger@2.2-impl \
     audio.primary.msm8953 \
     audio.r_submix.default \
     audio.usb.default \
@@ -96,6 +97,12 @@ PRODUCT_PACKAGES += \
     libqcomvoiceprocessing \
     libqcompostprocbundle \
     tinymix
+
+# A2DP
+PRODUCT_PACKAGES += \
+  audio.a2dp.default \
+  android.hardware.bluetooth.a2dp@1.0-impl \
+  android.hardware.bluetooth.a2dp@1.0-service
 
 # Audio configuration
 PRODUCT_COPY_FILES += \
@@ -132,7 +139,7 @@ PRODUCT_PACKAGES += \
     android.hardware.graphics.allocator@2.0-service \
     android.hardware.graphics.composer@2.1-impl \
     android.hardware.graphics.composer@2.1-service \
-    android.hardware.graphics.mapper@2.0-impl-2.1 \
+    android.hardware.graphics.mapper@2.0-impl \
     android.hardware.memtrack@1.0-impl \
     android.hardware.memtrack@1.0-service \
     copybit.msm8953 \
@@ -174,10 +181,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/gps/lowi.conf:$(TARGET_COPY_OUT_VENDOR)/etc/lowi.conf \
     $(LOCAL_PATH)/configs/gps/sap.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sap.conf \
     $(LOCAL_PATH)/configs/gps/xtwifi.conf:$(TARGET_COPY_OUT_VENDOR)/etc/xtwifi.conf
-
-# Healthd
-PRODUCT_PACKAGES += \
-    chargeonlymode
 
 # HIDL
 PRODUCT_PACKAGES += \
@@ -316,6 +319,9 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_BOOT_JARS += \
     telephony-ext
+
+#RRO
+PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += $(LOCAL_PATH)/overlay/packages/apps/Snap
 
 # Seccomp policy
 PRODUCT_COPY_FILES += \
