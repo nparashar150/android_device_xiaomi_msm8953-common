@@ -52,16 +52,10 @@ camera.display.umax=1920x1080 \
 camera.hal1.packagelist=com.skype.raider,com.google.android.talk \
 camera.lowpower.record.enable=1 \
 media.camera.ts.monotonic=1 \
-dalvik.vm.heapstartsize=16m \
-dalvik.vm.heapgrowthlimit=256m \
-dalvik.vm.heapsize=512m \
-dalvik.vm.heaptargetutilization=0.75 \
-dalvik.vm.heapminfree=4m \
-dalvik.vm.heapmaxfree=8m \
 persist.camera.gyro.disable=0 \
 persist.camera.isp.clock.optmz=0 \
 persist.camera.stats.test=5 \
-persist.vendor.qti.telephony.vt_cam_interface=1 \
+persist.vendor.qti.telephony.vt_cam_interface=2 \
 vidc.enc.dcvs.extra-buff-count=2
 
 # Cne/Dpm
@@ -79,9 +73,12 @@ debug.egl.hw=0 \
 debug.enable.sglscale=1 \
 debug.gralloc.enable_fb_ubwc=1 \
 debug.mdpcomp.logs=0 \
+debug.sdm.support_writeback=0 \
+debug.sf.disable_backpressure=1 \
+debug.sf.enable_gl_backpressure=1 \
 debug.sf.enable_hwc_vds=1 \
 debug.sf.hw=0 \
-debug.sf.latch_unsignaled=0 \
+debug.sf.latch_unsignaled=1 \
 debug.cpurend.vsync=false \
 debug.sf.recomputecrop=0 \
 dev.pm.dyn_samplingrate=1 \
@@ -96,20 +93,8 @@ sdm.debug.disable_skip_validate=1 \
 vendor.display.disable_skip_validate=1 \
 vendor.display.enable_default_color_mode=1 \
 vendor.gralloc.enable_fb_ubwc=1 \
+vendor.video.disable.ubwc=1 \
 ro.sf.lcd_density=420
-
-# SurfaceFlinger
-ro.surface_flinger.protected_contents=true
-ro.surface_flinger.use_smart_90_for_video=true
-ro.surface_flinger.set_display_power_timer_ms=10000
-ro.surface_flinger.set_touch_timer_ms=5000
-ro.surface_flinger.set_idle_timer_ms=9000
-
-# Graphics
-debug.sf.early_phase_offset_ns=1500000
-debug.sf.early_app_phase_offset_ns=1500000
-debug.sf.early_gl_phase_offset_ns=3000000
-debug.sf.early_gl_app_phase_offset_ns=15000000
 
 # DRM
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -193,13 +178,21 @@ persist.dbg.vt_avail_ovr=1 \
 persist.dbg.wfc_avail_ovr=1 \
 persist.vendor.radio.apm_sim_not_pwdn=1 \
 persist.radio.multisim.config=dsds \
+persist.radio.VT_ENABLE=1 \
+persist.radio.volte.dan_support=true \
+persist.sys.cust.lte_config=true \
 persist.vendor.radio.custom_ecc=1 \
 persist.vendor.radio.jbims=1 \
 persist.vendor.radio.rat_on=combine \
 persist.vendor.radio.sib16_support=1 \
+persist.vendor.data.iwlan.enable=true \
+persist.dbg.ims_volte_enable=1 \
+persist.data.iwlan=1 \
+persist.data.iwlan.ipsec.ap=1 \
 ril.subscription.types=NV,RUIM \
 rild.libargs=-d/dev/smd0 \
 rild.libpath=/vendor/lib64/libril-qc-qmi-1.so \
+ro.telephony.iwlan_operation_mode=legacy \
 ro.telephony.call_ring.multiple=false \
 ro.telephony.default_network=22,20 \
 service.qti.ims.enabled=1

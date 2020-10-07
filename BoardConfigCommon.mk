@@ -37,17 +37,19 @@ TARGET_USES_64_BIT_BINDER := true
 
 # Build
 BUILD_BROKEN_DUP_RULES := true
+BUILD_BROKEN_USES_BUILD_COPY_HEADERS := true
+BUILD_BROKEN_PREBUILT_ELF_FILES := true
 
 # Kernel
 BOARD_KERNEL_BASE := 0x80000000
 BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 androidboot.bootdevice=7824900.sdhci earlycon=msm_hsl_uart,0x78af000 androidboot.usbconfigfs=true
+BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
 BOARD_KERNEL_PAGESIZE :=  2048
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01000000 --tags_offset 0x00000100
 TARGET_KERNEL_SOURCE := kernel/xiaomi/msm8953
 TARGET_KERNEL_CLANG_COMPILE := true
 TARGET_KERNEL_VERSION := 4.9
-BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 
 # ANT
 BOARD_ANT_WIRELESS_DEVICE := "vfs-prerelease"
@@ -152,6 +154,7 @@ TARGET_FS_CONFIG_GEN := $(VENDOR_PATH)/config.fs
 # HIDL
 DEVICE_MANIFEST_FILE := $(VENDOR_PATH)/manifest.xml
 DEVICE_MATRIX_FILE   := $(VENDOR_PATH)/compatibility_matrix.xml
+PRODUCT_ENFORCE_VINTF_MANIFEST_OVERRIDE := true
 
 # HWUI
 HWUI_COMPILE_FOR_PERF := true
@@ -181,9 +184,7 @@ TARGET_PER_MGR_ENABLED := true
 
 # Power
 #TARGET_USES_INTERACTION_BOOST := true
-
-# SurfaceFlinger
-TARGET_USE_AOSP_SURFACEFLINGER := true
+TARGET_HAS_NO_WLAN_STATS := true
 
 # Qualcomm
 BOARD_USES_QCOM_HARDWARE := true
@@ -207,7 +208,6 @@ endif
 include device/qcom/sepolicy-legacy-um/sepolicy.mk
 BOARD_SEPOLICY_DIRS += $(VENDOR_PATH)/sepolicy
 SELINUX_IGNORE_NEVERALLOWS := true
-
 
 # Wi-Fi
 BOARD_HAS_QCOM_WLAN := true
